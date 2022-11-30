@@ -1,0 +1,79 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'com.diffplug.spotless' version '6.12.0'
+}
+
+group 'io.github.jeremylong'
+version = '1.0.0'
+description = 'slf4j binding for JCS3 logging'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    testImplementation 'ch.qos.logback:logback-core:1.2.11'
+    testImplementation 'ch.qos.logback:logback-classic:1.2.11'
+
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'org.apache.commons:commons-jcs3-core:3.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+spotless {
+    java {
+        eclipse().configFile("$rootDir/buildSrc/src/main/config/spotless.eclipseformat.xml")
+        licenseHeaderFile("$rootDir/buildSrc/src/main/config/java.license").updateYearWithLatest(true)
+    }
+}
+spotlessJava.dependsOn 'compileJava'
+spotlessJava.dependsOn 'compileTestJava'
+build.finalizedBy 'spotlessApply'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId project.group
+            artifactId project.name
+            version project.version
+            from components.java
+            pom {
+                url = 'https://github.com/jeremylong/jcs3-slf4j/'
+                description = project.description
+                name = project.name
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://github.com/jeremylong/jcs3-slf4j/blob/main/LICENSE.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'jeremy.long'
+                        name = 'Jeremy Long'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/jeremylong/jcs3-slf4j'
+                    connection = 'scm:git:https://github.com/jeremylong/jcs3-slf4j.git'
+                    developerConnection = 'scm:git:https://github.com/jeremylong/jcs3-slf4j.git'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username project.findProperty('sonatypeUsername') ?: System.getenv("SONATYPE_USER")
+                password project.findProperty('sonatypePassword') ?: System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
+}
