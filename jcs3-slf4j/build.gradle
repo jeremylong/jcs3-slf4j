@@ -18,14 +18,25 @@ dependencies {
     testImplementation 'ch.qos.logback:logback-core:1.2.11'
     testImplementation 'ch.qos.logback:logback-classic:1.2.11'
 
-    implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'org.apache.commons:commons-jcs3-core:3.0'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    //log4j is only included to prevent class not found exception; see
+    // https://issues.apache.org/jira/browse/JCS-232
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
-
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
 spotless {
     java {
         eclipse().configFile("$rootDir/buildSrc/src/main/config/spotless.eclipseformat.xml")
@@ -35,6 +46,24 @@ spotless {
 spotlessJava.dependsOn 'compileJava'
 spotlessJava.dependsOn 'compileTestJava'
 build.finalizedBy 'spotlessApply'
+
+javadoc {
+    failOnError = false
+    options.encoding("UTF-8")
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+signing {
+    sign publishing.publications
+}
+sourcesJar.dependsOn(compileJava)
+sourcesJar.dependsOn(compileTestJava)
+javadoc.dependsOn(compileTestJava)
 
 publishing {
     publications {
