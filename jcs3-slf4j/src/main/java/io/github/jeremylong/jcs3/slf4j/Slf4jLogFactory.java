@@ -29,7 +29,7 @@ public class Slf4jLogFactory implements LogFactory {
 
     @Override
     public String getName() {
-        return "sl4j";
+        return "slf4j";
     }
 
     @Override
@@ -48,5 +48,4 @@ public class Slf4jLogFactory implements LogFactory {
         final Logger log = LoggerFactory.getLogger(type);
         return new Slf4jAdapter(log);
     }
-
 }

@@ -24,7 +24,7 @@ class Slf4jLogFactoryTest {
     @Test
     void getName() {
         Slf4jLogFactory factory = new Slf4jLogFactory();
-        String expected = "sl4j";
+        String expected = "slf4j";
         String actual = factory.getName();
         assertTrue(expected.equals(actual));
     }
