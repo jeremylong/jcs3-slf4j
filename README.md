@@ -8,3 +8,19 @@ Add the jcs3-slf4j library to your JCS3 project and set:
 ```shell
 -Djcs.logSystem=slf4j
 ```
+
+## Maven
+
+```xml
+<dependency>
+    <groupId>io.github.jeremylong</groupId>
+    <artifactId>jcs3-slf4j</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+## Gradle
+
+```groovy
+implementation 'io.github.jeremylong:jcs3-slf4j:1.0.0'
+```
