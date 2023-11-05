@@ -1,5 +1,5 @@
 /*
- *  Copyright 2022 Jeremy Long
+ *  Copyright 2022-2023 Jeremy Long
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,8 +19,11 @@ import org.apache.commons.jcs3.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Log adapter for JCS3 logging to slf4j.
@@ -47,12 +50,16 @@ public class Slf4jAdapter implements Log {
 
     @Override
     public void debug(String string, Object... os) {
-        logger.debug(string, os);
+        String msg = MessageFormat.format(string, os);
+        logger.debug(msg);
     }
 
     @Override
     public void debug(String string, Supplier<?>... splrs) {
-        log(Level.DEBUG, string, splrs);
+        List<String> args = Arrays.stream(splrs).map(it -> it.get().toString()).collect(Collectors.toList());
+        String msg = MessageFormat.format(string, args.toArray());
+        // log(Level.DEBUG, string, splrs);
+        logger.debug(msg);
     }
 
     @Override
@@ -72,12 +79,16 @@ public class Slf4jAdapter implements Log {
 
     @Override
     public void error(String string, Object... os) {
-        logger.error(string, os);
+        String msg = MessageFormat.format(string, os);
+        logger.error(msg);
     }
 
     @Override
     public void error(String string, Supplier<?>... splrs) {
-        log(Level.ERROR, string, splrs);
+        List<String> args = Arrays.stream(splrs).map(it -> it.get().toString()).collect(Collectors.toList());
+        String msg = MessageFormat.format(string, args.toArray());
+        logger.error(msg);
+        // log(Level.ERROR, string, splrs);
     }
 
     @Override
@@ -97,12 +108,16 @@ public class Slf4jAdapter implements Log {
 
     @Override
     public void fatal(String string, Object... os) {
-        logger.error(string, os);
+        String msg = MessageFormat.format(string, os);
+        logger.error(msg);
     }
 
     @Override
     public void fatal(String string, Supplier<?>... splrs) {
-        log(Level.ERROR, string, splrs);
+        List<String> args = Arrays.stream(splrs).map(it -> it.get().toString()).collect(Collectors.toList());
+        String msg = MessageFormat.format(string, args.toArray());
+        logger.error(msg);
+        // log(Level.ERROR, string, splrs);
     }
 
     @Override
@@ -127,12 +142,16 @@ public class Slf4jAdapter implements Log {
 
     @Override
     public void info(String string, Object... os) {
-        logger.info(string, os);
+        String msg = MessageFormat.format(string, os);
+        logger.info(msg);
     }
 
     @Override
     public void info(String string, Supplier<?>... splrs) {
-        log(Level.INFO, string, splrs);
+        List<String> args = Arrays.stream(splrs).map(it -> it.get().toString()).collect(Collectors.toList());
+        String msg = MessageFormat.format(string, args.toArray());
+        logger.info(msg);
+        // log(Level.INFO, string, splrs);
     }
 
     @Override
@@ -182,12 +201,16 @@ public class Slf4jAdapter implements Log {
 
     @Override
     public void trace(String string, Object... os) {
-        logger.trace(string, os);
+        String msg = MessageFormat.format(string, os);
+        logger.trace(msg);
     }
 
     @Override
     public void trace(String string, Supplier<?>... splrs) {
-        log(Level.TRACE, string, splrs);
+        List<String> args = Arrays.stream(splrs).map(it -> it.get().toString()).collect(Collectors.toList());
+        String msg = MessageFormat.format(string, args.toArray());
+        logger.trace(msg);
+        // log(Level.TRACE, string, splrs);
     }
 
     @Override
@@ -207,12 +230,16 @@ public class Slf4jAdapter implements Log {
 
     @Override
     public void warn(String string, Object... os) {
-        logger.warn(string, os);
+        String msg = MessageFormat.format(string, os);
+        logger.warn(msg);
     }
 
     @Override
     public void warn(String string, Supplier<?>... splrs) {
-        log(Level.WARN, string, splrs);
+        List<String> args = Arrays.stream(splrs).map(it -> it.get().toString()).collect(Collectors.toList());
+        String msg = MessageFormat.format(string, args.toArray());
+        logger.warn(msg);
+        // log(Level.WARN, string, splrs);
     }
 
     @Override
