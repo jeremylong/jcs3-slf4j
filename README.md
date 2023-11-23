@@ -15,12 +15,12 @@ Add the jcs3-slf4j library to your JCS3 project and set:
 <dependency>
     <groupId>io.github.jeremylong</groupId>
     <artifactId>jcs3-slf4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
 ## Gradle
 
 ```groovy
-implementation 'io.github.jeremylong:jcs3-slf4j:1.0.0'
+implementation 'io.github.jeremylong:jcs3-slf4j:1.0.3'
 ```

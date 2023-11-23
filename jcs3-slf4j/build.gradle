@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'io.github.jeremylong'
-version = '1.0.1'
+version = '1.0.3'
 description = 'slf4j binding for JCS3 logging'
 
 repositories {
