@@ -17,7 +17,6 @@ package io.github.jeremylong.jcs3.slf4j;
 
 import org.apache.commons.jcs3.log.Log;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 import java.text.MessageFormat;
@@ -35,11 +34,6 @@ public class Slf4jAdapter implements Log {
 
     private final Logger logger;
     private final boolean muted;
-
-    public Slf4jAdapter() {
-        logger = LoggerFactory.getLogger(Slf4jAdapter.class);
-        muted = Boolean.getBoolean(System.getProperty("jcs.logSystem.mute", "false"));
-    }
 
     public Slf4jAdapter(Logger log) {
         this.logger = log;
@@ -209,32 +203,32 @@ public class Slf4jAdapter implements Log {
 
     @Override
     public boolean isDebugEnabled() {
-        return !muted && logger.isDebugEnabled();
+        return logger.isDebugEnabled();
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return !muted && logger.isErrorEnabled();
+        return logger.isErrorEnabled();
     }
 
     @Override
     public boolean isFatalEnabled() {
-        return !muted && logger.isErrorEnabled();
+        return logger.isErrorEnabled();
     }
 
     @Override
     public boolean isInfoEnabled() {
-        return !muted && logger.isInfoEnabled();
+        return logger.isInfoEnabled();
     }
 
     @Override
     public boolean isTraceEnabled() {
-        return !muted && logger.isTraceEnabled();
+        return logger.isTraceEnabled();
     }
 
     @Override
     public boolean isWarnEnabled() {
-        return !muted && logger.isWarnEnabled();
+        return logger.isWarnEnabled();
     }
 
     @Override
@@ -344,10 +338,9 @@ public class Slf4jAdapter implements Log {
     }
 
     private boolean isEnabled(Level level) {
-        return !muted && ((Level.DEBUG == level && logger.isDebugEnabled())
-                || (Level.INFO == level && logger.isInfoEnabled()) || (Level.TRACE == level && logger.isTraceEnabled())
-                || (Level.WARN == level && logger.isWarnEnabled())
-                || (Level.ERROR == level && logger.isErrorEnabled()));
+        return (Level.DEBUG == level && logger.isDebugEnabled()) || (Level.INFO == level && logger.isInfoEnabled())
+                || (Level.TRACE == level && logger.isTraceEnabled()) || (Level.WARN == level && logger.isWarnEnabled())
+                || (Level.ERROR == level && logger.isErrorEnabled());
     }
 
 }
