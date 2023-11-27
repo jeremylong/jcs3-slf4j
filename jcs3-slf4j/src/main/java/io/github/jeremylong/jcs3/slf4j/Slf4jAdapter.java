@@ -33,11 +33,14 @@ import java.util.stream.Collectors;
 public class Slf4jAdapter implements Log {
 
     private final Logger logger;
-    private final boolean muted;
+    private static boolean muted;
 
     public Slf4jAdapter(Logger log) {
         this.logger = log;
-        muted = Boolean.getBoolean(System.getProperty("jcs.logSystem.mute", "false"));
+    }
+
+    public static void muteLogging(boolean mute) {
+        muted = mute;
     }
 
     @Override
